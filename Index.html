@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechEdge Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase App -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+
+    <script type="module" src="firebaseConfig.js"></script>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="./images/logo.png" alt="TechEdge Portfolio Logo">
+        </div>
+        <div class="title">
+            <h1>TechEdge Portfolio</h1>
+            <p>Your insight into my IT journey</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="project.html">Project</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li id="loginSignup">
+                    <a href="login.html" id="loginLink">Login</a>
+                    <a href="#" id="logoutLink" class="hidden">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Introduction Section -->
+        <section id="introduction" class="section">
+            <div class="container">
+                <h2>Welcome to TechEdge Portfolio</h2>
+                <h3>Your insight into my IT journey</h3>
+            </div>
+        </section>
+
+        <!-- Main Content Section -->
+        <section id="main-content" class="section">
+            <div class="container">
+                <div class="content-wrapper">
+                    <div class="content-text">
+                        <h2><strong>Welcome to my TechEdge Portfolio!</strong></h2>
+                        <p>This website is a showcase of my journey in the field of Information Technology, with a
+                            particular focus on web design. As a student at Nelson Marborough Institute of Technology
+                            and an intern at Over the Edge Web Design, I have gained a wealth of experience and skills
+                            that I am excited to share with you.</p>
+                        <p>"As a dedicated IT enthusiast, I am passionate about creating innovative digital solutions
+                            that enhance user experience and drive business growth. My mission is to continually learn,
+                            adapt, and contribute to the dynamic world of technology."</p>
+                        <h3>In this portfolio, you'll discover:</h3>
+
+                        <p><strong>Skills and Expertise:</strong> a summary of my knowledge in HTML, CSS, JavaScript,
+                            and other related areas.</p>
+                        <p><strong>Projects and Internships:</strong> Detailed summaries of my internship experiences
+                            and the projects I have worked on.</p>
+
+                        <p><strong>Contact Information:</strong> How to contact me about possible joint ventures or
+                            possibilities.</p>
+                        <p>"Through collaboration and creativity, I strive to build solutions that not only meet current
+                            technological needs but also anticipate future challenges."</p>
+                    </div>
+                    <div class="personal-photo">
+                        <img src="./images/Personal photo.jpg" alt="Personal Photograph" width="250" height="350">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="social-media">
+            <a href="https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2F">Facebook</a>
+            <a href="https://www.linkedin.com/onboarding/start/follow-recommendations/new/">LinkedIn</a>
+            <a href="https://www.instagram.com/meet_patel_7984/">Instagram</a>
+            <a href="https://m.me/100083406470306?hash=AbYFRswqHZXOcn31&source=qr_link_share">Messenger</a>
+        </div>
+        <p>&copy; 2024 Meet Patel. All Rights Reserved<br><br><a href="skills-management.html">Manage Skills</a></p>
+    </footer>
+
+    <script type="module">
+        import { auth } from './firebaseConfig.js';
+        import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+
+        // Get the login, logout links
+        const loginLink = document.getElementById('loginLink');
+        const logoutLink = document.getElementById('logoutLink');
+
+        // Listen for changes in authentication state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginLink.style.display = 'none';
+                logoutLink.style.display = 'inline';
+            } else {
+                loginLink.style.display = 'inline';
+                logoutLink.style.display = 'none';
+            }
+        });
+
+        // Logout functionality
+        logoutLink.addEventListener('click', async (event) => {
+            event.preventDefault();
+            try {
+                await signOut(auth);
+                alert('You have logged out.');
+                window.location.href = 'index.html'; // Redirect to homepage after logout
+            } catch (error) {
+                console.error('Error logging out:', error);
+            }
+        });
+    </script>
+</body>
+
+</html>

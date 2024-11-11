@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TechEdge Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="./images/logo.png" alt="TechEdge Portfolio Logo">
+        </div>
+        <div class="title">
+            <h1>TechEdge Portfolio</h1>
+            <p>Your insight into my IT journey</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="project.html">Project</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li id="loginSignup">
+                    <a href="signup.html" id="signupLink">Sign Up</a>
+                    <a href="#" id="logoutLink" style="display:none;">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="login-section">
+            <div class="container">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                </form>
+                <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="social-media">
+            <a href="https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2F">Facebook</a>
+            <a href="https://www.linkedin.com/onboarding/start/follow-recommendations/new/">LinkedIn</a>
+            <a href="https://www.instagram.com/meet_patel_7984/">Instagram</a>
+            <a href="https://m.me/100083406470306?hash=AbYFRswqHZXOcn31&source=qr_link_share">Messenger</a>
+        </div>
+        <p>&copy; 2024 Meet Patel. All Rights Reserved<br><br><a href="skills-management.html">Manage Skills</a></p>
+    </footer>
+
+    <script type="module">
+        import { auth } from './firebaseConfig.js';
+        import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+        const loginForm = document.getElementById("loginForm");
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                // Sign in the user with email and password
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Check if email is verified
+                if (!user.emailVerified) {
+                    alert("Please verify your email before logging in.");
+                    return;
+                }
+
+                // If email is verified, redirect the user
+                window.location.href = "index.html";  // Redirect to the homepage or dashboard
+
+            } catch (error) {
+                alert("Error logging in: " + error.message);
+            }
+        });
+    </script>
+</body>
+
+</html>
